@@ -6,9 +6,10 @@ type FunctionParam struct {
 }
 
 type InterfaceAttr struct {
-	Name   string `json:"name"`
-	Public bool   `json:"public"`
-	Params []FunctionParam
+	Name    string `json:"name"`
+	Public  bool   `json:"public"`
+	Params  []FunctionParam
+	Returns []string `json:"return_types"`
 }
 
 type Interface struct {

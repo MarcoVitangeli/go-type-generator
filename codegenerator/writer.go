@@ -61,7 +61,7 @@ func (w Writer) buildInterface(it types.Interface) string {
 		name = toTitle(name)
 	}
 
-	finalStr := fmt.Sprintf("\ntype %s interface\n", name)
+	finalStr := fmt.Sprintf("\ntype %s interface {\n", name)
 
 	for _, attr := range it.Attrs {
 		name := strings.ToLower(attr.Name)
@@ -73,7 +73,21 @@ func (w Writer) buildInterface(it types.Interface) string {
 		for _, fp := range attr.Params {
 			parArr = append(parArr, fmt.Sprintf("%s %s", strings.ToLower(fp.Name), fp.Type))
 		}
-		finalStr += strings.Join(parArr, ", ") + ")\n"
+		finalStr += strings.Join(parArr, ", ") + ")"
+
+		rLen := len(attr.Returns)
+
+		switch rLen {
+		case 0:
+			finalStr += "\n"
+		case 1:
+			finalStr += " " + attr.Returns[0] + "\n"
+		default:
+			finalStr += fmt.Sprintf(
+				" (%s)\n",
+				strings.Join(attr.Returns, ", "),
+			)
+		}
 	}
 
 	finalStr += "}\n"

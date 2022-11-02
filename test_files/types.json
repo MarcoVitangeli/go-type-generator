@@ -19,7 +19,7 @@
     ],
     "interface": [
         {
-            "name": "Gretter",
+            "name": "gretter",
             "public": true,
             "attrs": [
                 {
@@ -30,6 +30,10 @@
                             "name": "prefix",
                             "type": "string"
                         }
+                    ],
+                    "return_types": [
+                        "[]int",
+                        "error"
                     ]
                 }
             ]
