@@ -40,6 +40,16 @@ func ParseJson(path string) (types.TypeData, error) {
 	}
 	defer file.Close()
 
+	fileInfo, err := file.Stat()
+
+	if err != nil {
+		return t, err
+	}
+
+	if fileInfo.IsDir() {
+		return t, errors.New("path must be a file")
+	}
+
 	var jsonData map[string]json.RawMessage
 
 	err = json.NewDecoder(file).Decode(&jsonData)
