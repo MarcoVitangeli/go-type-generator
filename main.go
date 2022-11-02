@@ -16,7 +16,7 @@ func main() {
 		os.Exit(1)
 	}
 
-	err = os.Mkdir(codegenerator.DirName, 0777)
+	err = os.Mkdir(codegenerator.PackageName, 0777)
 
 	if err != nil {
 		fmt.Printf("error creating directory: %s\n", err)

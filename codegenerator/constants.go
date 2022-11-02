@@ -1,6 +1,6 @@
 package codegenerator
 
 const (
-	DirName  = "typesgen"
-	FileName = "typesgen/types.go"
+	PackageName = "typesgen"
+	FileName    = "typesgen/types.go"
 )

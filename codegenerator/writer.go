@@ -15,7 +15,7 @@ type Writer struct {
 }
 
 func (w Writer) writeHeader() error {
-	_, err := w.Write([]byte("package " + DirName + "\n"))
+	_, err := w.Write([]byte("package " + PackageName + "\n"))
 	return err
 }
 

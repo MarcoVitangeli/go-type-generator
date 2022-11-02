@@ -26,7 +26,7 @@ func GenerateCode(t types.TypeData, w Writer) error {
 }
 
 func GenerateDirAndFile() (io.Writer, error) {
-	err := os.Mkdir(DirName, 0777)
+	err := os.Mkdir(PackageName, 0777)
 
 	if err != nil {
 		return nil, errors.New(fmt.Sprintf("error creating directory: %s\n", err))

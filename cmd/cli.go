@@ -8,6 +8,7 @@ import (
 
 	"github.com/MarcoVitangeli/go-type-generator/codegenerator"
 	"github.com/MarcoVitangeli/go-type-generator/json"
+	"github.com/MarcoVitangeli/go-type-generator/validation"
 )
 
 const (
@@ -19,7 +20,8 @@ func usage() {
 	fmt.Println(ColorGreen, "Golang CLI code generator")
 	fmt.Println("  with this CLI, you can load a json file, and convert it to a golang types file")
 	fmt.Printf("  Usage:\n")
-	fmt.Printf("    %s <json_file_path>\n", os.Args[0])
+	fmt.Printf("    %s <json_file_path> [-validate]\n", os.Args[0])
+	fmt.Printf("  - validate				run a type checker after code generation to assert that the types entered are correct\n")
 }
 
 func printErr(msg string) {
@@ -49,8 +51,7 @@ func run() error {
 	if err != nil {
 		return err
 	}
-
-	return nil
+	return validation.Validate()
 }
 
 func main() {
