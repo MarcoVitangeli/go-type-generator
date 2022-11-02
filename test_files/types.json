@@ -1,0 +1,38 @@
+{
+    "struct": [
+        {
+            "name": "person",
+            "public": true,
+            "attrs": [
+                {
+                    "name": "id",
+                    "public": true,
+                    "type": "int32"
+                },
+                {
+                    "name": "name",
+                    "public": true,
+                    "type": "string"
+                }
+            ]
+        }
+    ],
+    "interface": [
+        {
+            "name": "Gretter",
+            "public": true,
+            "attrs": [
+                {
+                    "name": "greet",
+                    "public": true,
+                    "params": [
+                        {
+                            "name": "prefix",
+                            "type": "string"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}
