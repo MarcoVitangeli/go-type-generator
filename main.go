@@ -16,14 +16,14 @@ func main() {
 		os.Exit(1)
 	}
 
-	err = os.Mkdir("typesgen", 0777)
+	err = os.Mkdir(codegenerator.DirName, 0777)
 
 	if err != nil {
 		fmt.Printf("error creating directory: %s\n", err)
 		os.Exit(1)
 	}
 
-	file, err := os.Create("typesgen/types.go")
+	file, err := os.Create(codegenerator.FileName)
 
 	if err != nil {
 		fmt.Printf("error creating file: %s\n", err)
