@@ -10,11 +10,16 @@ import (
 	"golang.org/x/text/language"
 )
 
-type writer struct {
+type Writer struct {
 	io.Writer
 }
 
-func (w writer) buildStruct(st types.Struct) string {
+func (w Writer) writeHeader() error {
+	_, err := w.Write([]byte("package typesgen\n"))
+	return err
+}
+
+func (w Writer) buildStruct(st types.Struct) string {
 	name := strings.ToLower(st.Name)
 	if st.Public {
 		name = toTitle(name)
@@ -40,7 +45,7 @@ func toTitle(s string) string {
 	return caser.String(s)
 }
 
-func (w writer) writeStructs(t []types.Struct) {
+func (w Writer) writeStructs(t []types.Struct) error {
 	var finalStr string
 	for _, st := range t {
 		name := strings.ToLower(st.Name)
@@ -61,5 +66,7 @@ func (w writer) writeStructs(t []types.Struct) {
 		finalStr += "}\n"
 	}
 
-	w.Write([]byte(finalStr))
+	_, err := w.Write([]byte(finalStr))
+
+	return err
 }
