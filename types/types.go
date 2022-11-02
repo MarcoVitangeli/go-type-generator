@@ -28,3 +28,8 @@ type Struct struct {
 	Public bool         `json:"public"`
 	Attrs  []StructAttr `json:"attrs"`
 }
+
+type TypeData struct {
+	Structs    []Struct
+	Interfaces []Interface
+}
