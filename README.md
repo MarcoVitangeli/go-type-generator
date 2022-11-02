@@ -10,3 +10,7 @@ cd go-type-generator
 go build -o parser cmd/cli.go
 ./parser [-h | --help] <json file path>
 ```
+
+## Examples
+
+for examples on how the json file structure should be, see `test_files` section.
