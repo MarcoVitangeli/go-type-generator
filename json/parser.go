@@ -8,23 +8,8 @@ import (
 	"github.com/MarcoVitangeli/go-type-generator/types"
 )
 
-func ParseJson(path string) (types.TypeData, error) {
+func getJsonData(jsonData map[string]json.RawMessage) (types.TypeData, error) {
 	var t types.TypeData
-	file, err := os.Open(path)
-
-	if err != nil {
-		return t, err
-	}
-	defer file.Close()
-
-	var jsonData map[string]json.RawMessage
-
-	err = json.NewDecoder(file).Decode(&jsonData)
-
-	if err != nil {
-		return t, err
-	}
-
 	if jsonData["struct"] == nil || jsonData["interface"] == nil {
 		return t, errors.New("missing struct or interface keys in json file")
 	}
@@ -44,6 +29,26 @@ func ParseJson(path string) (types.TypeData, error) {
 	t.Interfaces = interfs
 
 	return t, nil
+}
+
+func ParseJson(path string) (types.TypeData, error) {
+	var t types.TypeData
+	file, err := os.Open(path)
+
+	if err != nil {
+		return t, err
+	}
+	defer file.Close()
+
+	var jsonData map[string]json.RawMessage
+
+	err = json.NewDecoder(file).Decode(&jsonData)
+
+	if err != nil {
+		return t, err
+	}
+
+	return getJsonData(jsonData)
 }
 
 func getStructs(j json.RawMessage) ([]types.Struct, error) {
