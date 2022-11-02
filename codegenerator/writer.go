@@ -48,24 +48,43 @@ func toTitle(s string) string {
 func (w Writer) writeStructs(t []types.Struct) error {
 	var finalStr string
 	for _, st := range t {
-		name := strings.ToLower(st.Name)
-		if st.Public {
-			name = toTitle(name)
-		}
-		// they start with '\n' because of the space that the
-		// 'package types' line will ocupate
-		finalStr += fmt.Sprintf("\ntype %s struct {\n", name)
+		finalStr += w.buildStruct(st)
+	}
+	_, err := w.Write([]byte(finalStr))
 
-		for _, attr := range st.Attrs {
-			name := strings.ToLower(attr.Name)
-			if attr.Public {
-				name = toTitle(name)
-			}
-			finalStr += fmt.Sprintf("\t%s %s\n", name, attr.Type)
-		}
-		finalStr += "}\n"
+	return err
+}
+
+func (w Writer) buildInterface(it types.Interface) string {
+	name := strings.ToLower(it.Name)
+	if it.Public {
+		name = toTitle(name)
 	}
 
+	finalStr := fmt.Sprintf("\ntype %s interface\n", name)
+
+	for _, attr := range it.Attrs {
+		name := strings.ToLower(attr.Name)
+		if it.Public {
+			name = toTitle(name)
+		}
+		finalStr += fmt.Sprintf("\t%s(", name)
+		var parArr []string
+		for _, fp := range attr.Params {
+			parArr = append(parArr, fmt.Sprintf("%s %s", strings.ToLower(fp.Name), fp.Type))
+		}
+		finalStr += strings.Join(parArr, ", ") + ")\n"
+	}
+
+	finalStr += "}\n"
+	return finalStr
+}
+
+func (w Writer) writeInterfaces(its []types.Interface) error {
+	var finalStr string
+	for _, i := range its {
+		finalStr += w.buildInterface(i)
+	}
 	_, err := w.Write([]byte(finalStr))
 
 	return err

@@ -9,6 +9,13 @@ func GenerateCode(t types.TypeData, w Writer) error {
 	if err != nil {
 		return err
 	}
+
+	err = w.writeInterfaces(t.Interfaces)
+
+	if err != nil {
+		return err
+	}
+
 	err = w.writeStructs(t.Structs)
 	return err
 }
